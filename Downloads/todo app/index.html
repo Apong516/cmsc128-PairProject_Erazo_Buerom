@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TaskDash — App</title>
+
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"></div>
+
+    <!-- Profile card -->
+    <a href="#top" class="profile-card" id="profileCard" title="Go to top">
+      <div class="photo-holder" id="photoHolder">
+        <img id="profilePhoto" alt="Profile photo" hidden />
+        <div id="avatarInitials" class="avatar-large">U</div>
+        <button id="clearPhotoBtn" class="clear-btn" type="button" title="Remove photo" hidden>×</button>
+      </div>
+      <div class="who">
+        <span id="profileNameTop">User</span>
+        <small id="profileEmail">you@example.com</small>
+      </div>
+    </a>
+    <input type="file" id="photoInput" accept="image/*" hidden />
+
+    <nav class="menu">
+      <button class="nav active" id="dashboardNav" type="button">Dashboard</button>
+      <button class="nav" type="button" disabled>Vital Task</button>
+      <button class="nav" type="button" disabled>My Task</button>
+      <button class="nav" type="button" disabled>Task Categories</button>
+      <button class="nav" type="button" disabled>Settings</button>
+      <button class="nav" type="button" disabled>Help</button>
+    </nav>
+
+    <div class="logout"><button id="logoutBtn" class="logout-btn" type="button">Logout</button></div>
+  </aside>
+
+  <!-- Main -->
+  <main id="top" class="main">
+    <header class="top">
+      <div class="left-actions">
+        <button id="topbarToggle" class="icon-btn" title="Hide/Show sidebar">☰</button>
+
+        <!-- App brand (scrolls top) -->
+        <a class="app-brand" href="#top"><span class="logo">TD</span> TaskDash</a>
+
+        <div class="search"><input id="searchInput" type="search" placeholder="Search your task here…" /></div>
+      </div>
+      <div class="actions">
+        <div class="today"><span id="todayLabel"></span><span aria-hidden="true">•</span><span id="clockLabel"></span></div>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <h1>Welcome back, <span id="displayName">Friend</span> 👋</h1>
+      <p>Plan your day. Track progress. Stay on top.</p>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title"><span aria-hidden="true">🗂️</span><h2>To-Do</h2><small id="todoCount">(0)</small></div>
+          <div class="controls">
+            <button id="addTaskBtn" class="primary small">+ Add task</button>
+            <select id="sortSelect" title="Sort tasks">
+              <option value="createdDesc">Sort: Date Added (newest)</option>
+              <option value="createdAsc">Sort: Date Added (oldest)</option>
+              <option value="dueAsc">Sort: Due Date (earliest)</option>
+              <option value="dueDesc">Sort: Due Date (latest)</option>
+              <option value="priority">Sort: Priority (High → Low)</option>
+            </select>
+          </div>
+        </div>
+        <ul id="todoList" class="cards" aria-live="polite"></ul>
+      </div>
+
+      <div class="side">
+        <div class="panel status-panel">
+          <div class="panel-head"><div class="title"><span aria-hidden="true">📊</span><h2>Task Status</h2></div></div>
+          <div class="status">
+            <div class="donuts">
+              <div class="donut-wrap done">
+                <div id="donutDone" class="donut">0%</div>
+                <div class="donut-title">Completed</div>
+              </div>
+              <div class="donut-wrap prog">
+                <div id="donutProg" class="donut">0%</div>
+                <div class="donut-title">In Progress</div>
+              </div>
+              <div class="donut-wrap not">
+                <div id="donutNot" class="donut">0%</div>
+                <div class="donut-title">Not Started</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel completed-panel">
+          <div class="panel-head"><div class="title"><span aria-hidden="true">✅</span><h2>Completed</h2><small id="doneCount">(0)</small></div></div>
+          <ul id="doneList" class="cards compact" aria-live="polite"></ul>
+        </div>
+
+        <div class="panel deleted-panel">
+          <div class="panel-head"><div class="title"><span aria-hidden="true">🗑️</span><h2>Deleted</h2><small id="delCount">(0)</small></div></div>
+          <ul id="deletedList" class="cards compact" aria-live="polite"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add/Edit Task Dialog -->
+  <dialog id="taskDialog">
+    <form id="taskForm">
+      <header><h3 id="dialogTitle">Add Task</h3></header>
+      <div class="form-grid">
+        <label><span>Title *</span><input required id="titleInput" placeholder="e.g., Finish CMSC 128 lab" /></label>
+        <label class="full"><span>Description</span><textarea id="descInput" rows="3" placeholder="Short details (optional)"></textarea></label>
+        <label><span>Priority</span>
+          <select id="priorityInput">
+            <option value="High">High 🔴</option>
+            <option value="Mid" selected>Mid 🟡</option>
+            <option value="Low">Low 🟢</option>
+          </select>
+        </label>
+        <label><span>Due Date</span><input type="date" id="dateInput" /></label>
+        <label><span>Due Time</span><input type="time" id="timeInput" /></label>
+        <label class="full"><span>Or type due (string)</span><input id="dueTextInput" placeholder="e.g., Next Friday 5 PM" /></label>
+      </div>
+      <footer class="dialog-actions">
+        <button type="button" id="cancelDialog">Cancel</button>
+        <button type="submit" id="saveTaskBtn" class="primary">Save</button>
+      </footer>
+      <input type="hidden" id="idInput" />
+    </form>
+  </dialog>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden>
+    <span id="toastMsg">Task deleted.</span>
+    <button id="undoBtn" class="link">Undo</button>
+  </div>
+
+  <!-- Centered Confirm Dialog -->
+  <dialog id="confirmDialog" class="confirm" aria-labelledby="confirmTitle" aria-describedby="confirmMsg">
+    <form method="dialog" class="wrap">
+      <div class="head">
+        <div class="icon" aria-hidden="true">!</div>
+        <div>
+          <h3 id="confirmTitle">Delete task</h3>
+          <p id="confirmMsg">Are you sure you want to delete this task?</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn cancel" value="cancel" autofocus>Cancel</button>
+        <button class="btn ok" value="ok">Delete</button>
+      </div>
+    </form>
+  </dialog>
+
+
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
