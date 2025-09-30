@@ -4,43 +4,53 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TaskDash — App</title>
-
-  <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <button id="sidebarToggle" class="toggle-btn" title="Hide/Show sidebar">☰</button>
-      Dashboard
-    </div>
-    <div class="profile">
-      <div class="avatar" id="avatar">AE</div>
-      <div class="who"><strong id="profileName">Guest</strong><small>cmsc128 project</small></div>
-    </div>
-    <nav class="menu">
-      <button class="nav active" id="dashboardNav" type="button">Dashboard</button>
+    <div class="brand"></div>
+
+    <!-- Profile card -->
+    <a href="#top" class="profile-card" id="profileCard" title="Go to top">
+      <div class="photo-holder" id="photoHolder" aria-label="Profile photo">
+        <img id="profilePhoto" alt="Profile photo" hidden />
+        <div id="avatarInitials" class="avatar-large" aria-hidden="true">U</div>
+        <button id="clearPhotoBtn" class="clear-btn" type="button" title="Remove photo" hidden>×</button>
+      </div>
+      <div class="who">
+        <span id="profileNameTop">User</span>
+        <small id="profileEmail">you@example.com</small>
+      </div>
+    </a>
+    <input type="file" id="photoInput" accept="image/*" hidden />
+
+    <nav class="menu" aria-label="Primary">
+      <button class="nav active" id="dashboardNav" type="button" aria-current="page">Dashboard</button>
       <button class="nav" type="button" disabled>Vital Task</button>
       <button class="nav" type="button" disabled>My Task</button>
       <button class="nav" type="button" disabled>Task Categories</button>
       <button class="nav" type="button" disabled>Settings</button>
       <button class="nav" type="button" disabled>Help</button>
     </nav>
+
     <div class="logout"><button id="logoutBtn" class="logout-btn" type="button">Logout</button></div>
   </aside>
 
   <!-- Main -->
-  <main class="main">
+  <main id="top" class="main">
     <header class="top">
       <div class="left-actions">
-        <button id="topbarToggle" class="icon-btn" title="Hide/Show sidebar">☰</button>
-        <div class="search"><input id="searchInput" type="search" placeholder="Search your task here…" /></div>
+        <button id="topbarToggle" class="icon-btn" title="Hide/Show sidebar" aria-label="Toggle sidebar">☰</button>
+        <div class="search">
+          <label for="searchInput" class="visually-hidden">Search tasks</label>
+          <input id="searchInput" type="search" placeholder="Search your task here…" autocomplete="off" />
+        </div>
       </div>
       <div class="actions">
-        <button id="addTaskBtn" class="primary">+ Add task</button>
-        <div class="today" id="todayLabel"></div>
+        <button id="addTaskBtn" class="primary" aria-haspopup="dialog">+ Add task</button>
+        <div class="today" id="todayLabel" aria-live="polite"></div>
       </div>
     </header>
 
@@ -49,11 +59,16 @@
       <p>Plan your day. Track progress. Stay on top.</p>
     </section>
 
-    <section class="grid">
+    <section class="grid" aria-label="Dashboard">
       <div class="panel">
         <div class="panel-head">
-          <div class="title"><span aria-hidden="true">🗂️</span><h2>To-Do</h2><small id="todoCount">(0)</small></div>
+          <div class="title">
+            <span aria-hidden="true">🗂️</span>
+            <h2>To-Do</h2>
+            <small id="todoCount" aria-live="polite">(0)</small>
+          </div>
           <div class="controls">
+            <label for="sortSelect" class="visually-hidden">Sort tasks</label>
             <select id="sortSelect" title="Sort tasks">
               <option value="createdDesc">Sort: Date Added (newest)</option>
               <option value="createdAsc">Sort: Date Added (oldest)</option>
@@ -67,38 +82,33 @@
       </div>
 
       <div class="side">
-        <div class="panel">
+        <div class="panel status-panel">
           <div class="panel-head"><div class="title"><span aria-hidden="true">📊</span><h2>Task Status</h2></div></div>
           <div class="status">
             <div class="donuts">
-              <div class="donut-wrap">
-                <div id="donutDone" class="donut">0%</div>
+              <div class="donut-wrap done">
+                <div id="donutDone" class="donut" role="img" aria-label="Completed percentage">0%</div>
                 <div class="donut-title">Completed</div>
               </div>
-              <div class="donut-wrap">
-                <div id="donutProg" class="donut">0%</div>
+              <div class="donut-wrap prog">
+                <div id="donutProg" class="donut" role="img" aria-label="In Progress percentage">0%</div>
                 <div class="donut-title">In Progress</div>
               </div>
-              <div class="donut-wrap">
-                <div id="donutNot" class="donut">0%</div>
+              <div class="donut-wrap not">
+                <div id="donutNot" class="donut" role="img" aria-label="Not Started percentage">0%</div>
                 <div class="donut-title">Not Started</div>
               </div>
-            </div>
-            <div class="legend">
-              <span><i class="ldot g"></i>Completed</span>
-              <span><i class="ldot b"></i>In Progress</span>
-              <span><i class="ldot r"></i>Not Started</span>
             </div>
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head"><div class="title"><span aria-hidden="true">✅</span><h2>Completed</h2><small id="doneCount">(0)</small></div></div>
+        <div class="panel completed-panel">
+          <div class="panel-head"><div class="title"><span aria-hidden="true">✅</span><h2>Completed</h2><small id="doneCount" aria-live="polite">(0)</small></div></div>
           <ul id="doneList" class="cards compact" aria-live="polite"></ul>
         </div>
 
-        <div class="panel">
-          <div class="panel-head"><div class="title"><span aria-hidden="true">🗑️</span><h2>Deleted</h2><small id="delCount">(0)</small></div></div>
+        <div class="panel deleted-panel">
+          <div class="panel-head"><div class="title"><span aria-hidden="true">🗑️</span><h2>Deleted</h2><small id="delCount" aria-live="polite">(0)</small></div></div>
           <ul id="deletedList" class="cards compact" aria-live="polite"></ul>
         </div>
       </div>
@@ -106,8 +116,8 @@
   </main>
 
   <!-- Add/Edit Task Dialog -->
-  <dialog id="taskDialog">
-    <form id="taskForm">
+  <dialog id="taskDialog" aria-labelledby="dialogTitle">
+    <form id="taskForm" method="dialog">
       <header><h3 id="dialogTitle">Add Task</h3></header>
       <div class="form-grid">
         <label><span>Title *</span><input required id="titleInput" placeholder="e.g., Finish CMSC 128 lab" /></label>
@@ -133,10 +143,9 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite" hidden>
     <span id="toastMsg">Task deleted.</span>
-    <button id="undoBtn" class="link">Undo</button>
+    <button id="undoBtn" class="link" type="button">Undo</button>
   </div>
 
-  <!-- Scripts -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
