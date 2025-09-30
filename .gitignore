@@ -66,3 +66,6 @@ Searches/
 .vscode/
 .cache/
 .dotnet/
+
+# Exclude script.js from todo app (handled by pair)
+Downloads/todo app/script.js
