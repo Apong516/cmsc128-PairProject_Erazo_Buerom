@@ -1,0 +1,68 @@
+﻿# ====================
+# Git Ignore for User Directory - Keep only specific project folders
+# ====================
+
+# Ignore everything by default
+/*
+
+# Allow specific project folders
+!Downloads/
+Downloads/*
+!Downloads/todo app/
+
+!Documents/
+Documents/*
+!Documents/CMSC 128/
+Documents/CMSC 128/*
+!Documents/CMSC 128/Lab 1/
+Documents/CMSC 128/Lab 1/*
+!Documents/CMSC 128/Lab 1/cmsc128-todo/
+
+# Allow specific root files
+!README.md
+!.gitignore
+
+# ====================
+# System and personal file exclusions
+# ====================
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+ntuser.*
+NTUSER.*
+
+# Personal folders
+AppData/
+Contacts/
+Desktop/
+Favorites/
+Links/
+Music/
+Pictures/
+Videos/
+OneDrive/
+Saved Games/
+Searches/
+
+# Temp and log files
+*.tmp
+*.log
+~*
+
+# Personal documents
+*.pdf
+*.doc
+*.docx
+*.exe
+*.msi
+*.zip
+*.rar
+
+# Config files
+.bash_history
+.gitconfig
+.vscode/
+.cache/
+.dotnet/
