@@ -1,0 +1,162 @@
+body {
+  background: #f4f6fb;
+  font-family: Inter, system-ui, sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: linear-gradient(135deg, #0a63d1, #0a51c4);
+  color: #fff;
+  width: 260px;
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 24px 24px 0;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.15);
+}
+
+.user-block {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff;
+  color: #0a63d1;
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+}
+
+.sidebar h2 {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: auto;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px 60px;
+  overflow-y: auto;
+}
+
+.section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  padding: 30px 40px;
+  margin-bottom: 30px;
+}
+
+h1 {
+  color: #0a3c7d;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin: 12px 0 6px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e1e5ee;
+  font-size: 1rem;
+  outline: none;
+}
+
+input:focus {
+  border-color: #0a63d1;
+  box-shadow: 0 0 0 3px rgba(10, 99, 209, 0.1);
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.btn-save {
+  background: #0a63d1;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.btn-save:hover {
+  background: #094cb0;
+}
+
+.msg {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  min-height: 20px;
+}
+
+.msg.ok {
+  color: #0f9d58;
+}
+
+.msg.error {
+  color: #dc2626;
+}
+
+@media (max-width: 860px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 0;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .nav {
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .main {
+    padding: 24px;
+  }
+}
