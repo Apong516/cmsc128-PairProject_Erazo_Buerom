@@ -1,0 +1,10 @@
+# Ignore local secrets (create secrets.js from secrets.example.js locally)
+secrets.js
+
+# node / env
+node_modules/
+.env
+
+# Editor
+.vscode/
+.DS_Store

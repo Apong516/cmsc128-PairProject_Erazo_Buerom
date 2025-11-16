@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>taskdash — home</title>
+  <link rel="stylesheet" href="./home.css" />
+</head>
+<body>
+
+  <!-- sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <!-- you can put logo/text here if you want -->
+      <strong>taskdash</strong>
+    </div>
+
+  <!-- profile card -->
+  <a href="../profile/profile.html" class="profile-card" id="profileCard" title="open profile">
+      <div class="photo-holder" id="photoHolder" aria-label="profile photo">
+        <img id="profilePhoto" alt="profile photo" hidden />
+        <div id="avatarInitials" class="avatar-large" aria-hidden="true">U</div>
+        <button id="clearPhotoBtn" class="clear-btn" type="button" title="remove photo" hidden>×</button>
+      </div>
+      <div class="who">
+        <span id="profileNameTop">User</span>
+        <small id="profileEmail">you@example.com</small>
+      </div>
+    </a>
+    <input type="file" id="photoInput" accept="image/*" hidden />
+
+    <nav class="menu" aria-label="primary">
+  <a class="nav" href="../profile/profile.html">profile</a>
+      <button class="nav active" id="dashboardNav" type="button" aria-current="page">dashboard</button>
+      <button class="nav" type="button" disabled>vital task</button>
+      <button class="nav" type="button" disabled>my task</button>
+      <button class="nav" type="button" disabled>task categories</button>
+      <button class="nav" type="button" disabled>settings</button>
+      <button class="nav" type="button" disabled>help</button>
+      <button class="nav logout-nav" id="logoutBtn" type="button">logout</button>
+    </nav>
+  </aside>
+
+  <!-- main -->
+  <main id="top" class="main">
+    <header class="top">
+      <div class="left-actions">
+        <button id="topbarToggle" class="icon-btn" title="hide/show sidebar" aria-label="toggle sidebar">☰</button>
+        <div class="search">
+          <label for="searchInput" class="visually-hidden">search tasks</label>
+          <input id="searchInput" type="search" placeholder="search your task here…" autocomplete="off" />
+        </div>
+      </div>
+      <div class="actions">
+        <button id="addTaskBtn" class="primary" aria-haspopup="dialog">+ add task</button>
+        <div class="today" id="todayLabel" aria-live="polite"></div>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <h1>welcome back, <span id="displayName">friend</span> 👋</h1>
+      <p>plan your day. track progress. stay on top.</p>
+    </section>
+
+    <section class="grid" aria-label="dashboard">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title">
+            <span aria-hidden="true">🗂️</span>
+            <h2>to-do</h2>
+            <small id="todoCount" aria-live="polite">(0)</small>
+          </div>
+          <div class="controls">
+            <label for="sortSelect" class="visually-hidden">sort tasks</label>
+            <select id="sortSelect" title="sort tasks">
+              <option value="createdDesc">sort: date added (newest)</option>
+              <option value="createdAsc">sort: date added (oldest)</option>
+              <option value="dueAsc">sort: due date (earliest)</option>
+              <option value="dueDesc">sort: due date (latest)</option>
+              <option value="priority">sort: priority (high → low)</option>
+            </select>
+          </div>
+        </div>
+        <ul id="todoList" class="cards" aria-live="polite"></ul>
+      </div>
+
+      <div class="side">
+        <div class="panel status-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span aria-hidden="true">📊</span>
+              <h2>task status</h2>
+            </div>
+          </div>
+          <div class="status">
+            <div class="donuts">
+              <div class="donut-wrap done">
+                <div id="donutDone" class="donut" role="img" aria-label="completed percentage">0%</div>
+                <div class="donut-title">completed</div>
+              </div>
+              <div class="donut-wrap prog">
+                <div id="donutProg" class="donut" role="img" aria-label="in progress percentage">0%</div>
+                <div class="donut-title">in progress</div>
+              </div>
+              <div class="donut-wrap not">
+                <div id="donutNot" class="donut" role="img" aria-label="not started percentage">0%</div>
+                <div class="donut-title">not started</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel completed-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span aria-hidden="true">✅</span>
+              <h2>completed</h2>
+              <small id="doneCount" aria-live="polite">(0)</small>
+            </div>
+          </div>
+          <ul id="doneList" class="cards compact" aria-live="polite"></ul>
+        </div>
+
+        <div class="panel deleted-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span aria-hidden="true">🗑️</span>
+              <h2>deleted</h2>
+              <small id="delCount" aria-live="polite">(0)</small>
+            </div>
+          </div>
+          <ul id="deletedList" class="cards compact" aria-live="polite"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- add/edit task dialog -->
+  <dialog id="taskDialog" aria-labelledby="dialogTitle">
+    <form id="taskForm" method="dialog">
+      <header><h3 id="dialogTitle">add task</h3></header>
+      <div class="form-grid">
+        <label>
+          <span>title *</span>
+          <input required id="titleInput" placeholder="e.g. finish cmsc 128 lab" />
+        </label>
+        <label class="full">
+          <span>description</span>
+          <textarea id="descInput" rows="3" placeholder="short details (optional)"></textarea>
+        </label>
+        <label>
+          <span>priority</span>
+          <select id="priorityInput">
+            <option value="High">high 🔴</option>
+            <option value="Mid" selected>mid 🟡</option>
+            <option value="Low">low 🟢</option>
+          </select>
+        </label>
+        <label>
+          <span>due date</span>
+          <input type="date" id="dateInput" />
+        </label>
+        <label>
+          <span>due time</span>
+          <input type="time" id="timeInput" />
+        </label>
+        <label class="full">
+          <span>or type due (string)</span>
+          <input id="dueTextInput" placeholder="e.g. next friday 5 pm" />
+        </label>
+      </div>
+      <footer class="dialog-actions">
+        <button type="button" id="cancelDialog">cancel</button>
+        <button type="submit" id="saveTaskBtn" class="primary">save</button>
+      </footer>
+      <input type="hidden" id="idInput" />
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden>
+    <span id="toastMsg">task deleted.</span>
+    <button id="undoBtn" class="link" type="button">undo</button>
+  </div>
+
+  <script type="module" src="./home.js"></script>
+</body>
+</html>
