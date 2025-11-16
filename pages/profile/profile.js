@@ -54,6 +54,7 @@ const currentPwdEl = document.getElementById('currentPwd');
 let user = null;
 let pendingAction = null;
 
+
 /* password strength logic */
 function scorePassword(pwd){
   if(!pwd) return 0;

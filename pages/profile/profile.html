@@ -8,38 +8,9 @@
 </head>
 
 <body class="auth">
-  <!-- sidebar (shared) -->
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <!-- you can put logo/text here if you want -->
-      <strong>taskdash</strong>
-    </div>
+  <!-- sidebar removed for profile page (keeps profile centered). -->
 
-    <!-- profile card -->
-    <a href="profile.html" class="profile-card" id="profileCard" title="open profile">
-      <div class="photo-holder" id="photoHolder" aria-label="profile photo">
-        <img id="profilePhoto" alt="profile photo" hidden />
-        <div id="avatarInitials" class="avatar-large" aria-hidden="true">U</div>
-        <button id="clearPhotoBtn" class="clear-btn" type="button" title="remove photo" hidden>×</button>
-      </div>
-      <div class="who">
-        <span id="profileNameTop">User</span>
-        <small id="profileEmail">you@example.com</small>
-      </div>
-    </a>
-    <input type="file" id="photoInput" accept="image/*" hidden />
-
-    <nav class="menu" aria-label="primary">
-      <a class="nav" href="profile.html">profile</a>
-      <a class="nav" href="../home/home.html">dashboard</a>
-      <button class="nav" type="button" disabled>vital task</button>
-      <button class="nav" type="button" disabled>my task</button>
-      <button class="nav" type="button" disabled>task categories</button>
-      <button class="nav" type="button" disabled>settings</button>
-      <button class="nav" type="button" disabled>help</button>
-      <button class="nav logout-nav" id="logoutBtn" type="button">logout</button>
-    </nav>
-  </aside>
+  <a href="../home/home.html" class="back-btn top-back" aria-label="Back to dashboard">← Back</a>
 
   <main class="auth-card" role="main" aria-labelledby="title">
     <div class="brand"><div></div><strong>TaskDash</strong></div>
@@ -105,8 +76,8 @@
       <p id="pwdErr" class="error"></p>
     </section>
 
-    <!-- Reauth panel -->
-    <section id="reauthPanel" class="reauth hidden">
+  <!-- Reauth panel -->
+  <section id="reauthPanel" class="reauth hidden">
       <strong>For security, please confirm it’s you.</strong>
       <p>Enter your <em>current</em> password to continue.</p>
 
@@ -123,9 +94,7 @@
       </form>
 
       <small id="reauthMsg" class="field-msg"></small>
-    </section>
-
-    <p class="back-link"><a href="home.html">← Back to app</a></p>
+  </section>
   </main>
 
   <script type="module" src="profile.js"></script>

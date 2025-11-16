@@ -24,6 +24,28 @@ body.auth {
   background: linear-gradient(180deg,#f9fafb,#eef2ff);
 }
 
+/* Sidebar (match dashboard styling) */
+/* Sidebar removed for profile page; keep the profile card centered */
+.auth-card { margin-left: 0; max-width: 720px; width: 100%; }
+
+/* Icon button (hamburger) matching home.css */
+.back-btn { display:inline-block; color:var(--accent); text-decoration:none; font-weight:600; margin-bottom:8px; }
+
+/* Top-left fixed back button positioned outside the card */
+.top-back {
+  position: fixed;
+  left: 18px;
+  top: 18px;
+  z-index: 60;
+  background: #fff;
+  color: #0f172a;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #e9eef5;
+  box-shadow: 0 8px 20px rgba(15,23,42,0.08);
+}
+.top-back:hover { background:#f9fafb; text-decoration:none; }
+
 /* card */
 .auth-card {
   width: min(480px,100%);
