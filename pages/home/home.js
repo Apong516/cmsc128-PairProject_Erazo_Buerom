@@ -1,4 +1,4 @@
-/* ========= Firebase (CDN modules) ========= */
+/* ========= Firebase (CDN modules) ========== */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { 
   getAuth,
