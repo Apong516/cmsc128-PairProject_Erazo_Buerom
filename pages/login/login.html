@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login</title>
+  <title>Login — TaskDash</title>
   <link rel="stylesheet" href="./login.css" />
 </head>
 <body>
   <div class="auth-shell">
-    <!-- LEFT: blue welcome panel --->
+    <!-- LEFT: blue welcome panel -->
     <aside class="hero-left">
       <div class="hero-content">
         <h1 class="welcome">WELCOME</h1>
-        <h2 class="headline">TASKDASH TO-DO LIST</h2>
+        <h2 class="headline">TaskDash To-Do List</h2>
       </div>
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
@@ -24,10 +24,9 @@
       <!-- LOGIN -->
       <section id="panel-login" class="panel">
         <h2 class="title">Sign in</h2>
-        <p class="muted small">Use your <b>email</b> or <b>username</b> and password.</p>
 
         <form id="loginForm" class="form">
-          <!-- GROUP: username/email -->
+          <!-- USERNAME / EMAIL -->
           <div class="input-group">
             <label class="field">
               <span class="icon">👤</span>
@@ -36,7 +35,7 @@
             <p id="loginUserError" class="msg error"></p>
           </div>
 
-          <!-- GROUP: password -->
+          <!-- PASSWORD -->
           <div class="input-group">
             <label class="field">
               <span class="icon">🔒</span>
@@ -51,7 +50,8 @@
               <input type="checkbox" checked />
               <span>Remember me</span>
             </label>
-            <button id="forgotBtn" class="link link-forgot" type="button" aria-controls="panel-recover" aria-expanded="false">Forgot Password?</button>
+            <button id="forgotBtn" class="link link-forgot" type="button"
+                    aria-controls="panel-recover" aria-expanded="false">Forgot Password?</button>
           </div>
 
           <button class="btn primary wide" type="submit">Sign in</button>
