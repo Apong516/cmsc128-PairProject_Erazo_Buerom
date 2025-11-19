@@ -1,31 +1,33 @@
+// ========= Firebase setup =========
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  updateProfile,
-  signOut
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-import { firebaseConfig } from '/secrets.js';
+import { firebaseConfig } from "../../secrets.js"; // ✅ correct path
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const form = document.getElementById('signupForm');
-const nameEl = document.getElementById('name');
-const emailEl = document.getElementById('email');
-const passEl = document.getElementById('password');
-const confEl = document.getElementById('confirm');
-const submitBtn = document.getElementById('submitBtn');
-const msg = document.getElementById('msg');
+// ========= Elements =========
+const form = document.getElementById("signupForm");
+const nameEl = document.getElementById("name");
+const emailEl = document.getElementById("email");
+const passEl = document.getElementById("password");
+const confEl = document.getElementById("confirm");
+const submitBtn = document.getElementById("submitBtn");
+const msg = document.getElementById("msg");
 
-const nameMsg = document.getElementById('nameMsg');
-const emailMsg = document.getElementById('emailMsg');
-const passMsg = document.getElementById('passMsg');
-const confirmMsg = document.getElementById('confirmMsg');
+const nameMsg = document.getElementById("nameMsg");
+const emailMsg = document.getElementById("emailMsg");
+const passMsg = document.getElementById("passMsg");
+const confirmMsg = document.getElementById("confirmMsg");
 
-const strengthFill = document.getElementById('strengthFill');
-const strengthLabel = document.getElementById('strengthLabel');
+const strengthFill = document.getElementById("strengthFill");
+const strengthLabel = document.getElementById("strengthLabel");
 
+// ========= Password Strength =========
 function scorePassword(pwd) {
   if (!pwd) return 0;
   let s = 0;
@@ -34,7 +36,7 @@ function scorePassword(pwd) {
   if (/\d/.test(pwd)) s++;
   if (/[^A-Za-z0-9]/.test(pwd)) s++;
   if (pwd.length >= 10) s++;
-  const blacklist = ["password","qwerty","123456","111111","abc123","letmein","iloveyou"];
+  const blacklist = ["password", "qwerty", "123456", "111111", "abc123", "letmein", "iloveyou"];
   if (blacklist.includes(pwd.toLowerCase())) s = Math.min(s, 1);
   return Math.min(s, 5);
 }
@@ -42,88 +44,88 @@ function scorePassword(pwd) {
 function updateStrength() {
   const s = scorePassword(passEl.value);
   const widths = [0, 25, 45, 70, 85, 100];
-  strengthFill.style.width = widths[s] + '%';
-  strengthFill.dataset.level = String(s);
-  strengthLabel.textContent = ["Too short","Weak","Okay","Good","Strong","Strong"][s];
+  strengthFill.style.width = widths[s] + "%";
+  strengthLabel.textContent = ["Too short", "Weak", "Okay", "Good", "Strong", "Strong"][s];
 }
 
-function validate() {
+// ========= Validation =========
+function validate(showErrors = false) {
   let ok = true;
 
+  // Name
   if (!nameEl.value.trim()) {
-    nameMsg.textContent = 'Please enter your name.';
+    if (showErrors) nameMsg.textContent = "Please enter your name.";
     ok = false;
-  } else {
-    nameMsg.textContent = '';
-  }
+  } else nameMsg.textContent = "";
 
-  if (!emailEl.validity.valid) {
-    emailMsg.textContent = 'Enter a valid email address.';
+  // Email
+  if (!emailEl.value.trim() || !emailEl.validity.valid) {
+    if (showErrors) emailMsg.textContent = "Enter a valid email address.";
     ok = false;
-  } else {
-    emailMsg.textContent = '';
-  }
+  } else emailMsg.textContent = "";
 
+  // Password
   if (passEl.value.length < 6) {
-    passMsg.textContent = 'Password must be at least 6 characters.';
+    if (showErrors) passMsg.textContent = "Password must be at least 6 characters.";
     ok = false;
-  } else {
-    passMsg.textContent = '';
-  }
+  } else passMsg.textContent = "";
 
-  if (confEl.value !== passEl.value) {
-    confirmMsg.textContent = 'Passwords do not match.';
+  // Confirm password
+  if (confEl.value !== passEl.value || !confEl.value) {
+    if (showErrors) confirmMsg.textContent = "Passwords do not match.";
     ok = false;
-  } else {
-    confirmMsg.textContent = '';
-  }
+  } else confirmMsg.textContent = "";
 
+  // Enable or disable button live
   submitBtn.disabled = !ok;
   return ok;
 }
 
-[nameEl, emailEl, passEl, confEl].forEach(el =>
-  el.addEventListener('input', () => {
+// ========= Live Listeners =========
+[nameEl, emailEl, passEl, confEl].forEach((el) => {
+  el.addEventListener("input", () => {
     updateStrength();
-    validate();
-  })
-);
+    validate(false); // validate silently to toggle button only
+  });
+});
 
 updateStrength();
-validate();
+validate(false);
 
-form.addEventListener('submit', async (e) => {
+// ========= Submit =========
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (!validate()) return;
+  const ok = validate(true);
+  if (!ok) return;
 
   const name = nameEl.value.trim();
   const email = emailEl.value.trim();
   const pwd = passEl.value;
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Creating…';
-  msg.textContent = '';
+  submitBtn.textContent = "Creating…";
+  msg.textContent = "";
 
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pwd);
     await updateProfile(cred.user, { displayName: name });
 
-  // Mirror newly created user into localStorage so the app shows the correct name/email
-  try { localStorage.setItem('todo.user.v1', cred.user.displayName || name); } catch (e) {}
-  try { localStorage.setItem('todo.email.v1', cred.user.email || email); } catch (e) {}
+    localStorage.setItem("todo.user.v1", cred.user.displayName || name);
+    localStorage.setItem("todo.email.v1", cred.user.email || email);
 
-  // After successful sign-up, go straight to the app home page (user stays signed in)
-  window.location.href = '../home/home.html';
+    window.location.href = "../home/home.html";
   } catch (err) {
-    msg.textContent = ({
-      'auth/email-already-in-use': 'This email already has an account. Try logging in or use Forgot password.',
-      'auth/invalid-email': 'That email looks invalid.',
-      'auth/weak-password': 'Password must be at least 6 characters.',
-      'auth/operation-not-allowed': 'Enable Email/Password in Firebase → Auth.',
-      'auth/unauthorized-domain': 'Add your domain in Firebase → Auth → Authorized domains.'
-    }[err.code] || err.message);
-
+    console.error("Signup error:", err);
+    const map = {
+      "auth/email-already-in-use": "This email already has an account.",
+      "auth/invalid-email": "That email looks invalid.",
+      "auth/weak-password": "Password must be at least 6 characters.",
+      "auth/operation-not-allowed": "Enable Email/Password in Firebase → Authentication.",
+      "auth/unauthorized-domain": "Add your domain in Firebase → Authentication → Authorized domains."
+    };
+    msg.textContent = map[err.code] || err.message;
+    msg.classList.add("error");
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Sign up';
+    submitBtn.textContent = "Sign up";
   }
 });
