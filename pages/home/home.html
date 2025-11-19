@@ -8,15 +8,14 @@
 </head>
 <body>
 
-  <!-- sidebar --->
+  <!-- sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="brand">
-      <!-- you can put logo/text here if you want -->
       <strong>taskdash</strong>
     </div>
 
-  <!-- profile card -->
-  <a href="../profile/profile.html" class="profile-card" id="profileCard" title="open profile">
+    <!-- profile card -->
+    <a href="../profile/profile.html" class="profile-card" id="profileCard" title="open profile">
       <div class="photo-holder" id="photoHolder" aria-label="profile photo">
         <img id="profilePhoto" alt="profile photo" hidden />
         <div id="avatarInitials" class="avatar-large" aria-hidden="true">U</div>
@@ -29,14 +28,22 @@
     </a>
     <input type="file" id="photoInput" accept="image/*" hidden />
 
+    <!-- navigation -->
     <nav class="menu" aria-label="primary">
-  <a class="nav" href="../profile/profile.html">Profile</a>
+      <a class="nav" href="../profile/profile.html">Profile</a>
       <button class="nav active" id="dashboardNav" type="button" aria-current="page">Dashboard</button>
       <button class="nav" type="button" disabled>Vital task</button>
       <button class="nav" type="button" disabled>My task</button>
       <button class="nav" type="button" disabled>Task categories</button>
       <button class="nav logout-nav" id="logoutBtn" type="button">Logout</button>
     </nav>
+
+    <!-- collaborative lists section -->
+    <section class="lists-section">
+      <h3>My Lists</h3>
+      <ul id="listMenu" class="list-menu"></ul>
+      <button id="newListBtn" class="secondary">+ New Collab List</button>
+    </section>
   </aside>
 
   <!-- main -->
@@ -46,7 +53,7 @@
         <button id="topbarToggle" class="icon-btn" title="hide/show sidebar" aria-label="toggle sidebar">☰</button>
         <div class="search">
           <label for="searchInput" class="visually-hidden">Search Tasks</label>
-          <input id="searchInput" type="search" placeholder="search your task here…" autocomplete="off" />
+          <input id="searchInput" type="search" placeholder="Search your task here…" autocomplete="off" />
         </div>
       </div>
       <div class="actions">
@@ -56,8 +63,11 @@
     </header>
 
     <section class="welcome">
-      <h1>Welcome back, <span id="displayName">friend</span> 👋</h1>
+      <h1>Welcome back, <span id="displayName">User</span> 👋</h1>
       <p>Plan your day. Track progress. Stay on top.</p>
+      <p id="currentListLabel" class="current-list">Viewing: <strong>Personal List</strong></p>
+      <!-- only shows for collab lists where you are the owner -->
+      <button id="editMembersBtn" class="inline-link-btn" type="button" hidden>Edit members</button>
     </section>
 
     <section class="grid" aria-label="dashboard">
@@ -71,11 +81,11 @@
           <div class="controls">
             <label for="sortSelect" class="visually-hidden">sort tasks</label>
             <select id="sortSelect" title="sort tasks">
-              <option value="createdDesc">sort: date added (newest)</option>
-              <option value="createdAsc">sort: date added (oldest)</option>
-              <option value="dueAsc">sort: due date (earliest)</option>
-              <option value="dueDesc">sort: due date (latest)</option>
-              <option value="priority">sort: priority (high → low)</option>
+              <option value="createdDesc">Sort: date added (newest)</option>
+              <option value="createdAsc">Sort: date added (oldest)</option>
+              <option value="dueAsc">Sort: due date (earliest)</option>
+              <option value="dueDesc">Sort: due date (latest)</option>
+              <option value="priority">Sort: priority (high → low)</option>
             </select>
           </div>
         </div>
@@ -168,13 +178,33 @@
         </label>
       </div>
       <footer class="dialog-actions">
-        <button type="button" id="cancelDialog">cancel</button>
-        <button type="submit" id="saveTaskBtn" class="primary">save</button>
+        <button type="button" id="cancelDialog">Cancel</button>
+        <button type="submit" id="saveTaskBtn" class="primary">Save</button>
       </footer>
       <input type="hidden" id="idInput" />
     </form>
   </dialog>
 
+  <!-- new collaborative list dialog -->
+  <dialog id="listDialog" aria-labelledby="listDialogTitle">
+    <form id="listForm" method="dialog">
+      <header><h3 id="listDialogTitle">Create Collaborative List</h3></header>
+      <label>
+        <span>List Name *</span>
+        <input required id="listNameInput" placeholder="e.g. Nikko’s Group List" />
+      </label>
+      <label>
+        <span>Add Members (comma-separated emails)</span>
+        <textarea id="listMembersInput" rows="2" placeholder="e.g. victor@gmail.com, maria@gmail.com"></textarea>
+      </label>
+      <footer class="dialog-actions">
+        <button type="button" id="cancelListDialog">Cancel</button>
+        <button type="submit" id="saveListBtn" class="primary">Create</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- toast -->
   <div id="toast" class="toast" role="status" aria-live="polite" hidden>
     <span id="toastMsg">task deleted.</span>
     <button id="undoBtn" class="link" type="button">undo</button>
