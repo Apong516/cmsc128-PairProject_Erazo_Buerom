@@ -179,7 +179,7 @@ body {
 .form {
   margin-top: 14px;
   display: grid;
-  gap: 14px;
+  gap: -100px;
 }
 
 .input-group {
