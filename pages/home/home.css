@@ -1,4 +1,4 @@
-/* ===== CSS VARIABLES ====== */
+/* ===== CSS VARIABLES ===== */
 :root {
   --bg: #f5f7fb;
   --panel: #fff;
@@ -158,7 +158,6 @@ body {
   background: #ffffff2a;
 }
 
-/* nav menu */
 .menu {
   display: flex;
   flex-direction: column;
@@ -166,6 +165,13 @@ body {
   margin-top: 6px;
   flex: 1 1 auto;
   overflow-y: auto;
+
+  /* HIDE SCROLLBAR BUT KEEP SCROLLING */
+  scrollbar-width: none;
+}
+
+.menu::-webkit-scrollbar {
+  display: none;
 }
 
 .nav {
@@ -299,6 +305,19 @@ body.sidebar-collapsed .main {
 .welcome p {
   margin: 0;
   color: var(--muted);
+}
+
+/* inline button under welcome (edit members) */
+.inline-link-btn {
+  all: unset;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #2563eb;
+}
+
+.inline-link-btn:hover {
+  text-decoration: underline;
 }
 
 /* main grid */
@@ -666,10 +685,69 @@ textarea:focus {
   z-index: 20;
 }
 
-/* Ensure the presence of the HTML `hidden` attribute actually hides the toast
-   (some CSS resets or UA quirks can override it). This is defensive and safe. */
+/* Ensure the presence of the HTML `hidden` attribute actually hides the toast */
 .toast[hidden] {
   display: none !important;
+}
+
+/* ===== NEW COLLAB LIST BUTTON ===== */
+#newListBtn {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #ef4444, #f97316);
+  box-shadow: 0 6px 14px rgba(239, 68, 68, 0.25);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+#newListBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ===== COLLAB LIST ITEMS ===== */
+.list-menu {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.collab-item {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #ffffff25;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-align: center;
+}
+
+/* Highlight for active list in "My Lists" */
+.collab-item.active {
+  background: #fff;
+  color: #e11d48;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* small text for members */
+.list-members-label {
+  display: inline-block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.collab-item:hover {
+  background: #ffffff35;
 }
 
 /* responsive */
