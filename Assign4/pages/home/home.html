@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>taskdash — home</title>
+  <link rel="stylesheet" href="./home.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <!-- brand -->
+    <div class="brand">
+      <strong>taskdash</strong>
+    </div>
+
+    <!-- profile card -->
+    <a href="../profile/profile.html" class="profile-card" id="profileCard" title="open profile">
+      <div class="photo-holder" id="photoHolder">
+        <img id="profilePhoto" alt="profile photo" hidden />
+        <div id="avatarInitials" class="avatar-large">U</div>
+        <button id="clearPhotoBtn" class="clear-btn" type="button" hidden>×</button>
+      </div>
+      <div class="who">
+        <span id="profileNameTop">User</span>
+        <small id="profileEmail">you@example.com</small>
+      </div>
+    </a>
+    <input type="file" id="photoInput" accept="image/*" hidden />
+
+    <!-- MENU -->
+    <nav class="menu">
+
+      <!-- Profile -->
+      <a class="nav" href="../profile/profile.html">Profile</a>
+
+      <!-- Personal List -->
+      <button class="nav list-nav" id="personalListBtn" type="button">
+        Personal List
+      </button>
+
+      <!-- COLLAB LIST (EXPANDABLE) -->
+      <div class="collab-wrapper" id="collabWrap">
+        <button class="nav list-nav collab-toggle" id="collabToggle" type="button" aria-expanded="false">
+          <span>Collaborative List</span>
+          <span class="chevron">▸</span>
+        </button>
+
+        <!-- HIDDEN PANEL -->
+        <div class="collab-panel" id="collabPanel" hidden>
+          <ul class="collab-list" id="listMenu"></ul>
+
+          <button id="newListBtn" class="secondary fullwidth" type="button">
+            + New Collaborative List
+          </button>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- LOGOUT fixed at bottom -->
+    <button class="nav logout-nav" id="logoutBtn" type="button">Logout</button>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="top" class="main">
+    <header class="top">
+      <div class="left-actions">
+        <button id="topbarToggle" class="icon-btn" aria-label="toggle sidebar">☰</button>
+        <div class="search">
+          <label for="searchInput" class="visually-hidden">Search Tasks</label>
+          <input id="searchInput" type="search" placeholder="Search your task here…" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="addTaskBtn" class="primary" aria-haspopup="dialog">+ Add Task</button>
+        <div class="today" id="todayLabel"></div>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <h1>Welcome back, <span id="displayName">User</span> 👋</h1>
+      <p>Plan your day. Track progress. Stay on top.</p>
+      <p id="currentListLabel" class="current-list">Viewing: <strong>Personal List</strong></p>
+      <button id="editMembersBtn" class="inline-link-btn" type="button" hidden>Edit members</button>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="title">
+            <span>🗂️</span>
+            <h2>To-do</h2>
+            <small id="todoCount">(0)</small>
+          </div>
+          <div class="controls">
+            <select id="sortSelect">
+              <option value="createdDesc">Sort: date added (newest)</option>
+              <option value="createdAsc">Sort: date added (oldest)</option>
+              <option value="dueAsc">Sort: due date (earliest)</option>
+              <option value="dueDesc">Sort: due date (latest)</option>
+              <option value="priority">Sort: priority (high → low)</option>
+            </select>
+          </div>
+        </div>
+        <ul id="todoList" class="cards"></ul>
+      </div>
+
+      <div class="side">
+
+        <div class="panel status-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span>📊</span>
+              <h2>Task Status</h2>
+            </div>
+          </div>
+          <div class="status">
+            <div class="donuts">
+              <div class="donut-wrap done">
+                <div id="donutDone" class="donut">0%</div>
+                <div class="donut-title">Completed</div>
+              </div>
+              <div class="donut-wrap prog">
+                <div id="donutProg" class="donut">0%</div>
+                <div class="donut-title">In Progress</div>
+              </div>
+              <div class="donut-wrap not">
+                <div id="donutNot" class="donut">0%</div>
+                <div class="donut-title">Not Started</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel completed-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span>✅</span>
+              <h2>Completed</h2>
+              <small id="doneCount">(0)</small>
+            </div>
+          </div>
+          <ul id="doneList" class="cards compact"></ul>
+        </div>
+
+        <div class="panel deleted-panel">
+          <div class="panel-head">
+            <div class="title">
+              <span>🗑️</span>
+              <h2>Deleted</h2>
+              <small id="delCount">(0)</small>
+            </div>
+          </div>
+          <ul id="deletedList" class="cards compact"></ul>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- TASK DIALOG -->
+  <dialog id="taskDialog">
+    <form id="taskForm" method="dialog">
+      <header><h3 id="dialogTitle">Add Task</h3></header>
+
+      <div class="form-grid">
+        <label><span>title *</span><input required id="titleInput" /></label>
+        <label class="full"><span>description</span><textarea id="descInput" rows="3"></textarea></label>
+        <label><span>priority</span>
+          <select id="priorityInput">
+            <option value="High">high 🔴</option>
+            <option value="Mid" selected>mid 🟡</option>
+            <option value="Low">low 🟢</option>
+          </select>
+        </label>
+        <label><span>due date</span><input type="date" id="dateInput" /></label>
+        <label><span>due time</span><input type="time" id="timeInput" /></label>
+        <label class="full"><span>or type due (string)</span><input id="dueTextInput" /></label>
+      </div>
+
+      <footer class="dialog-actions">
+        <button type="button" id="cancelDialog">Cancel</button>
+        <button type="submit" id="saveTaskBtn" class="primary">Save</button>
+      </footer>
+
+      <input type="hidden" id="idInput" />
+    </form>
+  </dialog>
+
+  <!-- NEW COLLAB LIST DIALOG -->
+  <dialog id="listDialog">
+    <form id="listForm" method="dialog">
+      <header><h3 id="listDialogTitle">Create Collaborative List</h3></header>
+
+      <label><span>List Name *</span><input required id="listNameInput" /></label>
+      <label><span>Add Members (comma-separated emails)</span>
+        <textarea id="listMembersInput" rows="2"></textarea>
+      </label>
+
+      <footer class="dialog-actions">
+        <button type="button" id="cancelListDialog">Cancel</button>
+        <button type="submit" id="saveListBtn" class="primary">Create</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- (inline confirm dialogs are created dynamically) -->
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" hidden>
+    <span id="toastMsg"></span>
+    <button id="undoBtn" class="link" type="button">undo</button>
+  </div>
+
+  <script type="module" src="./home.js"></script>
+</body>
+</html>

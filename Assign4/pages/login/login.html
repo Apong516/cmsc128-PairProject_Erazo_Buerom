@@ -1,0 +1,99 @@
+<script>
+  (function() {
+    const params = new URLSearchParams(location.search);
+    const dirty = ['fbclid','gclid','utm_source','utm_medium','utm_campaign'].some(k=>params.has(k));
+    if (dirty) {
+      history.replaceState(null, '', location.pathname);
+    }
+  })();
+</script>
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — TaskDash</title>
+  <link rel="stylesheet" href="/login/login.css" />
+</head>
+<body>
+  <div class="auth-shell">
+    <!-- LEFT: gradient welcome panel -->
+    <aside class="hero-left" aria-hidden="true">
+      <div class="hero-content">
+        <h1 class="welcome">WELCOME</h1>
+        <h2 class="headline">TaskDash To-Do List</h2>
+      </div>
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </aside>
+
+    <!-- RIGHT: auth card -->
+    <main class="auth-card" role="main" aria-labelledby="loginTitle">
+      <!-- LOGIN -->
+      <section id="panel-login" class="panel" aria-live="polite">
+        <h2 id="loginTitle" class="title">Sign in</h2>
+
+        <form id="loginForm" class="form" novalidate>
+          <!-- USERNAME / EMAIL -->
+          <div class="input-group">
+            <label class="field" for="loginId">
+              <span class="icon" aria-hidden="true">👤</span>
+              <input id="loginId" placeholder="Email or Username" autocomplete="username" required />
+            </label>
+            <p id="loginUserError" class="msg error" role="alert"></p>
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="input-group">
+            <label class="field" for="loginPassword">
+              <span class="icon" aria-hidden="true">🔒</span>
+              <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required />
+              <button type="button" id="toggleLoginPw" class="show" aria-label="Show password">SHOW</button>
+            </label>
+            <p id="loginPassError" class="msg error" role="alert"></p>
+          </div>
+
+          <div class="row-between">
+            <label class="check">
+              <input id="remember" type="checkbox" checked />
+              <span>Remember me</span>
+            </label>
+            <button id="forgotBtn" class="link" type="button"
+                    aria-controls="panel-recover" aria-expanded="false">Forgot Password?</button>
+          </div>
+
+          <button class="btn primary wide" type="submit" id="loginSubmit">Sign in</button>
+
+          <p class="muted tiny center">
+            Don’t have an account?
+            <a class="link link-signup" href="../signup/signup.html">Sign up</a>
+          </p>
+          <p id="loginMsg" class="msg" role="status"></p>
+        </form>
+      </section>
+
+      <!-- RECOVER -->
+      <section id="panel-recover" class="panel hidden">
+        <h2 class="title">Password recovery</h2>
+        <form id="recoverForm" class="form" novalidate>
+          <div class="input-group">
+            <label class="field" for="recoverEmail">
+              <span class="icon" aria-hidden="true">✉️</span>
+              <input id="recoverEmail" type="email" placeholder="Your email" autocomplete="email" required />
+            </label>
+          </div>
+          <button class="btn warning wide" type="submit">Send reset link</button>
+          <p id="recoverMsg" class="msg" role="status"></p>
+          <p class="muted tiny center">
+            <button class="link link-login" type="button" aria-controls="panel-login">Back to sign in</button>
+          </p>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="/login/login.js"></script>
+</body>
+</html>

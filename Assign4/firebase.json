@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "site": "taskdash-c5cc1",
+    "public": "pages",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [{ "source": "/", "destination": "/login/login.html" }],
+    "headers": [
+      {
+        "source": "**/*.@(js|css)",
+        "headers": [{ "key": "Cache-Control", "value": "public, max-age=3600" }]
+      }
+    ]
+  }
+}
