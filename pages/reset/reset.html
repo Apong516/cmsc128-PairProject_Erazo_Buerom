@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>taskdash — reset password</title>
+  <link rel="stylesheet" href="/reset/reset.css" />
+</head>
+<body class="auth">
+  <main class="auth-card" role="main" aria-labelledby="title">
+    <div class="brand">
+      <div></div><strong>taskdash</strong>
+    </div>
+
+    <h1 id="title">reset your password</h1>
+    <p>enter the email you used to sign up. we’ll send a reset link.</p>
+
+    <form id="resetForm" novalidate>
+      <label>
+        <span>email</span>
+        <input id="email" type="email" autocomplete="email" required />
+        <small class="field-msg" id="emailMsg"></small>
+      </label>
+
+      <button class="primary" id="submitBtn" type="submit" disabled>send reset link</button>
+    </form>
+
+    <p class="back-link"><a href="login.html">back to login</a></p>
+
+    <p id="msg" class="error" aria-live="polite"></p>
+    <p id="ok" class="success" aria-live="polite"></p>
+  </main>
+
+  <script type="module" src="/reset/reset.js"></script>
+</body>
+</html>
