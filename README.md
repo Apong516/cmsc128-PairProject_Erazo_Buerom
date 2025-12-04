@@ -46,7 +46,7 @@ This project uses the following technologies:
 
 - Frontend: HTML5, CSS3, Vanilla JavaScript (ES6+). No frontend frameworks are used. CSS is authored with plain CSS; small utility classes are used for layout and components.
 - Backend / BaaS: Firebase Authentication (Email/Password) and Firestore for persistence and collaborative lists.
-- Hosting / Deployment: Vercel (production demo at https://taskdash-delta.vercel.app). The app can also be deployed on Netlify, Firebase Hosting, or GitHub Pages (ensure Firebase config is set appropriately).
+- Hosting / Deployment: Vercel (production demo at https://taskdash-delta.vercel.app). 
 
 Notes:
 
@@ -149,7 +149,6 @@ Expanded features (perfect score):
 
 Notes:
 
-- Use the same repository. Final commit name for the full project: `cmsc128-Final-Lab`.
 - Ensure the backend is production-ready (sensible CORS, secure secrets, environment variables, proper DB configuration).
 
 Deployment (live demo)
@@ -167,11 +166,6 @@ Security & secrets
 
 If `secrets.js` has already been committed, remove it from the index while keeping a local copy:
 
-```powershell
-git rm --cached secrets.js
-git commit -m "Remove secrets.js from repo and add to .gitignore"
-git push
-```
 
 Git & commit guidance
 ----------------------
