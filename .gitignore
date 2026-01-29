@@ -1,0 +1,38 @@
+# Ignore local secrets and environment files
+secrets.js
+.env
+.env.*
+
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log
+
+# IDE / Editor folders
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Misc
+*.env.local
+npm-debug.log*
+coverage/
+
+# If you accidentally committed secrets.js, remove it from the index with:
+#   git rm --cached secrets.js
+# then commit and push. To remove it from history, use tools like git-filter-repo or BFG (be cautious).

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TaskDash — Profile</title>
+  <link rel="stylesheet" href="/profile/profile.css" />
+</head>
+
+<body class="auth">
+  <a href="../home/home.html" class="back-btn top-back" aria-label="Back to dashboard">← Back</a>
+
+  <main class="auth-card" role="main" aria-labelledby="title">
+    <div class="brand"><div></div><strong>TaskDash</strong></div>
+
+    <h1 id="title">My profile</h1>
+    <p>Manage your account information.</p>
+
+    <!-- Avatar -->
+    <section class="avatar-section" aria-label="Profile photo">
+      <div class="avatar-wrap" id="avatarWrap">
+        <img id="profilePhoto" alt="Profile photo" hidden />
+        <div id="avatarInitials" class="avatar-initials">U</div>
+        <button id="clearPhotoBtn" class="clear-btn" type="button" title="Remove photo" hidden>×</button>
+      </div>
+      <div class="avatar-actions">
+        <input type="file" id="photoInput" accept="image/*" hidden />
+        <button class="btn" id="replacePhotoBtn" type="button">Replace Photo</button>
+        <button class="btn danger" id="removePhotoBtn" type="button" hidden>Remove Photo</button>
+      </div>
+      <small class="hint">Tip: Use a square image for best results.</small>
+    </section>
+
+    <!-- Account info -->
+    <section>
+      <h2>Account info</h2>
+      <form id="profileForm" novalidate>
+        <label>
+          <span>Name</span>
+          <input id="name" required />
+          <small class="field-msg" id="nameMsg"></small>
+        </label>
+
+        <label>
+          <span>Username</span>
+          <input id="username" required />
+          <small class="field-msg" id="usernameMsg"></small>
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input id="email" type="email" readonly autocomplete="email" />
+          <small class="field-msg" id="emailMsg"></small>
+        </label>
+
+        <button class="primary" id="saveBtn" type="submit" disabled>Save changes</button>
+      </form>
+
+      <p id="msgInfo" class="success"></p>
+      <p id="msgErr" class="error"></p>
+    </section>
+
+    <!-- Password -->
+    <section>
+      <h2>Change password</h2>
+      <form id="pwdForm" novalidate>
+        <label>
+          <span>New password</span>
+          <input id="newPwd" type="password" minlength="6" required autocomplete="new-password" />
+          <div class="strength">
+            <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+            <span class="strength-label" id="strengthLabel">Too short</span>
+          </div>
+          <small class="field-msg" id="pwdMsg"></small>
+        </label>
+
+        <label>
+          <span>Confirm password</span>
+          <input id="confirmPwd" type="password" required autocomplete="new-password" />
+          <small class="field-msg" id="confirmPwdMsg"></small>
+        </label>
+
+        <button class="primary" id="pwdBtn" type="submit" disabled>Update password</button>
+      </form>
+
+      <p id="pwdOk" class="success"></p>
+      <p id="pwdErr" class="error"></p>
+    </section>
+
+    <!-- Reauth panel (for sensitive ops like name/email/password/photo changes) -->
+    <section id="reauthPanel" class="reauth hidden">
+      <strong>For security, please confirm it’s you.</strong>
+      <p>Enter your <em>current</em> password to continue.</p>
+
+      <form id="reauthForm">
+        <label>
+          <span>Current password</span>
+          <input id="currentPwd" type="password" required />
+        </label>
+
+        <div class="flex">
+          <button class="primary" id="reauthBtn" type="submit">Confirm</button>
+          <button class="btn" id="cancelReauth" type="button">Cancel</button>
+        </div>
+      </form>
+
+      <small id="reauthMsg" class="field-msg"></small>
+    </section>
+  </main>
+
+  <script type="module" src="/profile/profile.js"></script>
+</body>
+</html>
